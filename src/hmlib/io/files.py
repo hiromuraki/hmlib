@@ -52,7 +52,9 @@ class TextFile:
         return self
 
     def commit_changes(self) -> "TextFile":
-        with open(self.path, mode="w", encoding=self.__encoding, newline=self.__newline) as fp:
+        with open(
+            self.path, mode="w", encoding=self.__encoding, newline=self.__newline
+        ) as fp:
             for line in self.__lines:
                 fp.write(line + self.__newline)
         return self

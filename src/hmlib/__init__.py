@@ -1,5 +1,5 @@
-from .DateTime import DateTime
-from .DynamicObject import DynamicObject
+from .datetime import DateTime
+from .dynamic_object import DynamicObject
 
 
 __all__ = [

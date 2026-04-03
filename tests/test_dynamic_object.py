@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from hmlib.DynamicObject import DynamicObject
+from hmlib import DynamicObject
 
 
 def test_getattr_reads_nested_dict_values() -> None:

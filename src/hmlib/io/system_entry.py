@@ -1,8 +1,8 @@
-from ..collection.List import List
+from ..collection.list import List
 from typing import Iterable
 from pathlib import Path
 from typing import Any, Optional
-from ..DateTime import DateTime
+from ..datetime import DateTime
 from io import FileIO
 import hashlib
 import os
@@ -32,7 +32,7 @@ class SystemEntry:
 class LocalFile(SystemEntry):
     def __init__(self, path: str | Path):
         super().__init__(path)
-        
+
         self.__sha256: Optional[str] = None
         self.__md5: Optional[str] = None
 
@@ -65,7 +65,9 @@ class LocalFile(SystemEntry):
         return LocalFile(dest_filepath)
 
     @classmethod
-    def move(cls, src_filepath: str, dest_filepath, create_dir: bool = False) -> "LocalFile":
+    def move(
+        cls, src_filepath: str, dest_filepath, create_dir: bool = False
+    ) -> "LocalFile":
         if not LocalFile(src_filepath).exists:
             raise IOError(f"{src_filepath} not found")
         if LocalFile(dest_filepath).exists:
@@ -126,7 +128,9 @@ class LocalFile(SystemEntry):
 
     def get_sha256(self) -> str:
         if self.__sha256 is None:
-            self.__sha256 = self.__calculate_hash(Path(self.absolute_path), hashlib.sha256())
+            self.__sha256 = self.__calculate_hash(
+                Path(self.absolute_path), hashlib.sha256()
+            )
 
         return self.__sha256
 
@@ -177,7 +181,9 @@ class LocalDirectory(SystemEntry):
     def get_files(self, recursive: bool = False) -> List[LocalFile]:
         return List(self.enumerate_files(recursive))
 
-    def enumerate_directories(self, recursive: bool = False) -> Iterable["LocalDirectory"]:
+    def enumerate_directories(
+        self, recursive: bool = False
+    ) -> Iterable["LocalDirectory"]:
         for root, dirs, _ in os.walk(self.absolute_path):
             for dir in dirs:
                 yield LocalDirectory(os.path.join(root, dir))

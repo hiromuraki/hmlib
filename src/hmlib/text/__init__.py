@@ -1,5 +1,5 @@
-from .Json import Json
-from .Regex import Regex
+from .json import Json
+from .regex import Regex
 
 
 __all__ = [

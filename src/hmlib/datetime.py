@@ -19,7 +19,7 @@ class DateTime:
         hour: Optional[int] = None,
         minute: Optional[int] = None,
         second: Optional[int] = None,
-        millisecond: Optional[int] = None
+        millisecond: Optional[int] = None,
     ) -> DateTime:
         """
         从日期时间组件创建DateTime对象
@@ -105,7 +105,9 @@ class DateTime:
         return (int)(self.__unix_timestamp)
 
     def __str__(self) -> str:
-        return time.strftime(r"%Y-%m-%d %H:%M:%S", time.localtime(self.__unix_timestamp))
+        return time.strftime(
+            r"%Y-%m-%d %H:%M:%S", time.localtime(self.__unix_timestamp)
+        )
 
     def __repr__(self) -> str:
         return self.__str__()

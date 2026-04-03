@@ -1,4 +1,4 @@
-from ..DynamicObject import DynamicObject
+from ..dynamic_object import DynamicObject
 import json
 
 

@@ -1,5 +1,5 @@
-from .SystemEntry import LocalDirectory, LocalFile
-from .Files import TextFile
+from .system_entry import LocalDirectory, LocalFile
+from .files import TextFile
 
 
 __all__ = [

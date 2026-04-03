@@ -1,4 +1,4 @@
-from .List import List
+from .list import List
 
 __all__ = [
     "List",
