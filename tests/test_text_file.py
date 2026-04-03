@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from hmpy.io import TextFile
+from hmlib.io import TextFile
 
 
 def test_text_file_reads_existing_file_as_plain_lines(tmp_path) -> None:

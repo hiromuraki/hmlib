@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from hmpy.text import Json
+from hmlib.text import Json
 
 
 def test_parse_reads_json_object_from_string() -> None:

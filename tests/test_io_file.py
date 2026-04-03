@@ -4,7 +4,7 @@ import hashlib
 
 import pytest
 
-from hmpy.io import LocalFile
+from hmlib.io import LocalFile
 
 
 def test_create_makes_empty_file_and_parent_directories(tmp_path) -> None:
@@ -42,12 +42,12 @@ def test_delete_rejects_missing_file(tmp_path) -> None:
 def test_copy_duplicates_file_contents(tmp_path) -> None:
     source_path = tmp_path / "source.txt"
     copied_path = tmp_path / "copy.txt"
-    source_path.write_text("hello hmpy\n", encoding="utf8")
+    source_path.write_text("hello hmlib\n", encoding="utf8")
 
     copied = LocalFile.copy(str(source_path), str(copied_path))
 
     assert copied.exists
-    assert copied_path.read_text(encoding="utf8") == "hello hmpy\n"
+    assert copied_path.read_text(encoding="utf8") == "hello hmlib\n"
 
 
 def test_copy_rejects_missing_source(tmp_path) -> None:
@@ -94,15 +94,15 @@ def test_move_rejects_existing_destination(tmp_path) -> None:
 
 def test_file_metadata_and_hashes_are_reported_exactly(tmp_path) -> None:
     path = tmp_path / "source.txt"
-    path.write_text("hello hmpy\n", encoding="utf8")
+    path.write_text("hello hmlib\n", encoding="utf8")
 
     file = LocalFile(str(path))
 
     assert file.filename_without_extension == "source"
     assert file.extension == ".txt"
-    assert file.size_in_bytes == len("hello hmpy\n".encode("utf8"))
-    assert file.get_md5() == hashlib.md5(b"hello hmpy\n").hexdigest()
-    assert file.get_sha256() == hashlib.sha256(b"hello hmpy\n").hexdigest()
+    assert file.size_in_bytes == len("hello hmlib\n".encode("utf8"))
+    assert file.get_md5() == hashlib.md5(b"hello hmlib\n").hexdigest()
+    assert file.get_sha256() == hashlib.sha256(b"hello hmlib\n").hexdigest()
 
 
 def test_file_metadata_for_extensionless_file(tmp_path) -> None:

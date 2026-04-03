@@ -4,7 +4,7 @@ import re
 
 import pytest
 
-from hmpy.text import Regex
+from hmlib.text import Regex
 
 
 def test_is_match_returns_true_for_full_match() -> None:

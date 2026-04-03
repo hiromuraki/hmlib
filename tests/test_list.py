@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from hmpy.collection import List
+from hmlib.collection import List
 
 
 def test_count_reflects_initial_items() -> None:

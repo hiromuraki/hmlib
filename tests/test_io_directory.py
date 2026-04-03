@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from hmpy.io import LocalDirectory
+from hmlib.io import LocalDirectory
 
 
 def test_directory_exists_only_for_directories(tmp_path) -> None:

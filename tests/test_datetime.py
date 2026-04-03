@@ -5,10 +5,10 @@ import importlib
 
 import pytest
 
-from hmpy.DateTime import DateTime
+from hmlib.DateTime import DateTime
 
 
-datetime_module = importlib.import_module("hmpy.DateTime")
+datetime_module = importlib.import_module("hmlib.DateTime")
 
 
 def test_from_datetime_uses_defaults_when_arguments_are_omitted() -> None:

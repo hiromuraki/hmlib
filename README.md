@@ -1,31 +1,31 @@
-# hmpy
+# hmlib
 
-[![Pytest](https://github.com/hiromuraki/hmpy/actions/workflows/pytest.yml/badge.svg?branch=main)](https://github.com/hiromuraki/hmpy/actions/workflows/pytest.yml)
+[![Pytest](https://github.com/hiromuraki/hmlib/actions/workflows/pytest.yml/badge.svg?branch=main)](https://github.com/hiromuraki/hmlib/actions/workflows/pytest.yml)
 
-`hmpy` 是一个基于 Python 的小型工具包，提供日期时间、动态对象、集合、文本处理和文件系统相关能力。
+`hmlib` 是一个基于 Python 的小型工具包，提供日期时间、动态对象、集合、文本处理和文件系统相关能力。
 
 ## 安装
 
 从 Git 安装：
 
 ```bash
-uv pip install "hmpy @ git+https://github.com/hiromuraki/hmpy.git"
+uv pip install "hmlib @ git+https://github.com/hiromuraki/hmlib.git"
 ```
 
 本地开发：
 
 ```bash
-git clone git@github.com:hiromuraki/hmpy.git
-cd hmpy
+git clone git@github.com:hiromuraki/hmlib.git
+cd hmlib
 uv sync --dev
 ```
 
 ## 使用
 
 ```python
-from hmpy import DateTime, DynamicObject
-from hmpy.io import LocalFile, LocalDirectory, TextFile
-from hmpy.text import Json, Regex
+from hmlib import DateTime, DynamicObject
+from hmlib.io import LocalFile, LocalDirectory, TextFile
+from hmlib.text import Json, Regex
 
 now = DateTime.now()
 data = DynamicObject({"name": "Ada"})
