@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import os
 
 import pytest
 
@@ -113,3 +114,39 @@ def test_file_metadata_for_extensionless_file(tmp_path) -> None:
 
     assert file.filename_without_extension == "source"
     assert file.extension == ""
+
+
+def test_compare_equality_returns_true_for_same_file(tmp_path) -> None:
+    path = tmp_path / "source.txt"
+    path.write_text("hello hmlib\n", encoding="utf8")
+
+    assert LocalFile.compare_equality(path, str(path))
+
+
+def test_compare_equality_returns_true_for_matching_contents(tmp_path) -> None:
+    first_path = tmp_path / "first.txt"
+    second_path = tmp_path / "second.txt"
+    first_path.write_text("same content", encoding="utf8")
+    second_path.write_text("same content", encoding="utf8")
+
+    assert LocalFile.compare_equality(str(first_path), second_path)
+
+
+def test_compare_equality_returns_false_for_different_contents(tmp_path) -> None:
+    first_path = tmp_path / "first.txt"
+    second_path = tmp_path / "second.txt"
+    first_path.write_text("first content", encoding="utf8")
+    second_path.write_text("second content", encoding="utf8")
+
+    assert not LocalFile.compare_equality(first_path, second_path)
+
+
+def test_compare_equality_rejects_non_regular_files(tmp_path) -> None:
+    fifo_path = tmp_path / "pipe"
+    os.mkfifo(fifo_path)
+
+    regular_path = tmp_path / "regular.txt"
+    regular_path.write_text("content", encoding="utf8")
+
+    with pytest.raises(ValueError, match="regular files"):
+        LocalFile.compare_equality(fifo_path, regular_path)
