@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import Iterable
-from ..collection import List
+from ..collection import ArrayList
 
 
 class TextFile:
@@ -30,8 +30,8 @@ class TextFile:
         for line in self.__lines:
             yield line
 
-    def get_lines(self) -> List[str]:
-        return List(self.enumerate_lines())
+    def get_lines(self) -> ArrayList[str]:
+        return ArrayList(self.enumerate_lines())
 
     def get_line(self, index: int) -> str:
         return self.__lines[index]

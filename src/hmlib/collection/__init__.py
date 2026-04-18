@@ -1,5 +1,5 @@
-from .list import List
+from .list import ArrayList
 
 __all__ = [
-    "List",
+    "ArrayList",
 ]

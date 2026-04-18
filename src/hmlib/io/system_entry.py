@@ -1,6 +1,4 @@
-import stat
-
-from ..collection.list import List
+from ..collection.list import ArrayList
 from typing import Iterable
 from pathlib import Path
 from typing import Any, Optional
@@ -9,6 +7,7 @@ from io import FileIO
 import hashlib
 import os
 import shutil
+import stat
 
 
 class SystemEntry:
@@ -164,15 +163,15 @@ class LocalFile(SystemEntry):
         return -1
 
     @property
-    def create_date_time(self) -> DateTime:
+    def create_datetime(self) -> DateTime:
         return DateTime(os.path.getctime(self.absolute_path))
 
     @property
-    def update_date_time(self) -> DateTime:
+    def update_datetime(self) -> DateTime:
         return DateTime(os.path.getmtime(self.absolute_path))
 
     @property
-    def access_date_time(self) -> DateTime:
+    def access_datetime(self) -> DateTime:
         return DateTime(os.path.getatime(self.absolute_path))
 
     def get_md5(self) -> str:
@@ -231,8 +230,8 @@ class LocalDirectory(SystemEntry):
             if not recursive:
                 break  # 仅遍历顶层目录
 
-    def get_files(self, recursive: bool = False) -> List[LocalFile]:
-        return List(self.enumerate_files(recursive))
+    def get_files(self, recursive: bool = False) -> ArrayList[LocalFile]:
+        return ArrayList(self.enumerate_files(recursive))
 
     def enumerate_directories(self, recursive: bool = False) -> Iterable["LocalDirectory"]:
         for root, dirs, _ in os.walk(self.absolute_path):
@@ -241,5 +240,5 @@ class LocalDirectory(SystemEntry):
             if not recursive:
                 break  # 仅遍历顶层目录
 
-    def get_directories(self, recursive: bool = False) -> List["LocalDirectory"]:
-        return List(self.enumerate_directories(recursive))
+    def get_directories(self, recursive: bool = False) -> ArrayList["LocalDirectory"]:
+        return ArrayList(self.enumerate_directories(recursive))
