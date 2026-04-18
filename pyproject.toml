@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hmlib"
-version = "0.1.23"
+version = "0.1.231"
 description = "A Python utils library"
 authors = [
   { name = "Your Name", email = "your.email@example.com" },

@@ -6,7 +6,9 @@ from datetime import datetime
 
 class DateTime:
     def __init__(self, unix_timestamp: int) -> None:
-        # 只允许使用 Unix 毫秒时间戳；内部始终按整数毫秒保存，避免浮点精度损失。
+        """
+        只允许使用 13 位整型 Unix 毫秒时间戳；内部始终按整数毫秒保存。
+        """
         if not isinstance(unix_timestamp, int):
             raise ValueError("timestamp must be an int Unix millisecond timestamp")
 
