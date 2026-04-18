@@ -164,15 +164,15 @@ class LocalFile(SystemEntry):
 
     @property
     def create_datetime(self) -> DateTime:
-        return DateTime(os.path.getctime(self.absolute_path))
+        return DateTime(int(round(os.path.getctime(self.absolute_path) * 1000)))
 
     @property
     def update_datetime(self) -> DateTime:
-        return DateTime(os.path.getmtime(self.absolute_path))
+        return DateTime(int(round(os.path.getmtime(self.absolute_path) * 1000)))
 
     @property
     def access_datetime(self) -> DateTime:
-        return DateTime(os.path.getatime(self.absolute_path))
+        return DateTime(int(round(os.path.getatime(self.absolute_path) * 1000)))
 
     def get_md5(self) -> str:
         if self.__md5 is None:

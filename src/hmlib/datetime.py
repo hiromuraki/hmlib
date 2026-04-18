@@ -5,11 +5,12 @@ from datetime import datetime
 
 
 class DateTime:
-    def __init__(self, unix_timestamp: float) -> None:
-        if isinstance(unix_timestamp, float):
-            self.__unix_timestamp = unix_timestamp
-        else:
-            raise ValueError("timestamp must be a float")
+    def __init__(self, unix_timestamp: int) -> None:
+        # 只允许使用 Unix 毫秒时间戳；内部始终按整数毫秒保存，避免浮点精度损失。
+        if not isinstance(unix_timestamp, int):
+            raise ValueError("timestamp must be an int Unix millisecond timestamp")
+
+        self.__unix_timestamp = unix_timestamp
 
     @staticmethod
     def from_datetime(
@@ -64,50 +65,48 @@ class DateTime:
 
         try:
             dt = datetime(year, month, day, hour, minute, second, millisecond * 1000)
-            unix_timestamp = dt.timestamp()
+            unix_timestamp = int(round(dt.timestamp() * 1000))
             return DateTime(unix_timestamp)
         except ValueError as e:
             raise ValueError(f"Invalid datetime parameters: {e}")
 
     @staticmethod
     def now() -> DateTime:
-        return DateTime(time.time())
+        return DateTime(int(round(time.time() * 1000)))
 
     @property
-    def unix_timestamp(self) -> float:
+    def unix_timestamp(self) -> int:
         return self.__unix_timestamp
 
     @property
     def year(self) -> int:
-        return time.localtime(self.__unix_timestamp).tm_year
+        return time.localtime(self.__unix_timestamp / 1000).tm_year
 
     @property
     def month(self) -> int:
-        return time.localtime(self.__unix_timestamp).tm_mon
+        return time.localtime(self.__unix_timestamp / 1000).tm_mon
 
     @property
     def day(self) -> int:
-        return time.localtime(self.__unix_timestamp).tm_mday
+        return time.localtime(self.__unix_timestamp / 1000).tm_mday
 
     @property
     def hour(self) -> int:
-        return time.localtime(self.__unix_timestamp).tm_hour
+        return time.localtime(self.__unix_timestamp / 1000).tm_hour
 
     @property
     def minute(self) -> int:
-        return time.localtime(self.__unix_timestamp).tm_min
+        return time.localtime(self.__unix_timestamp / 1000).tm_min
 
     @property
     def second(self) -> int:
-        return time.localtime(self.__unix_timestamp).tm_sec
+        return time.localtime(self.__unix_timestamp / 1000).tm_sec
 
     def __hash__(self) -> int:
-        return (int)(self.__unix_timestamp)
+        return self.__unix_timestamp
 
     def __str__(self) -> str:
-        return time.strftime(
-            r"%Y-%m-%d %H:%M:%S", time.localtime(self.__unix_timestamp)
-        )
+        return time.strftime(r"%Y-%m-%d %H:%M:%S", time.localtime(self.__unix_timestamp / 1000))
 
     def __repr__(self) -> str:
         return self.__str__()

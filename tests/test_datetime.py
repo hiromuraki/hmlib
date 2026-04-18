@@ -14,14 +14,14 @@ datetime_module = importlib.import_module("hmlib.datetime")
 def test_from_datetime_uses_defaults_when_arguments_are_omitted() -> None:
     value = DateTime.from_datetime()
 
-    assert value.unix_timestamp == py_datetime.datetime(1970, 1, 1).timestamp()
+    assert value.unix_timestamp == int(round(py_datetime.datetime(1970, 1, 1).timestamp() * 1000))
     assert str(value) == "1970-01-01 00:00:00"
 
 
 def test_from_datetime_preserves_exact_calendar_values() -> None:
     value = DateTime.from_datetime(2024, 2, 29, 23, 59, 59, 999)
 
-    expected = py_datetime.datetime(2024, 2, 29, 23, 59, 59, 999000).timestamp()
+    expected = int(round(py_datetime.datetime(2024, 2, 29, 23, 59, 59, 999000).timestamp() * 1000))
 
     assert value.unix_timestamp == expected
     assert value.year == 2024
@@ -30,7 +30,7 @@ def test_from_datetime_preserves_exact_calendar_values() -> None:
     assert value.hour == 23
     assert value.minute == 59
     assert value.second == 59
-    assert hash(value) == int(expected)
+    assert hash(value) == expected
 
 
 @pytest.mark.parametrize(
@@ -63,7 +63,7 @@ def test_from_datetime_rejects_invalid_calendar_dates() -> None:
 def test_now_reads_current_epoch_seconds(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(datetime_module.time, "time", lambda: 123.5)
 
-    assert DateTime.now().unix_timestamp == 123.5
+    assert DateTime.now().unix_timestamp == 123500
 
 
 def test_comparison_operators_compare_timestamp_values() -> None:
@@ -75,6 +75,6 @@ def test_comparison_operators_compare_timestamp_values() -> None:
     assert left == DateTime(left.unix_timestamp)
 
 
-def test_constructor_rejects_non_float_timestamp() -> None:
-    with pytest.raises(ValueError, match="timestamp must be a float"):
-        DateTime(1)
+def test_constructor_rejects_non_int_timestamp() -> None:
+    with pytest.raises(ValueError, match="timestamp must be an int Unix millisecond timestamp"):
+        DateTime(1.5)
